@@ -14,5 +14,6 @@ int main(){
     int order = 5;
     Graph* graph = new Graph(order, &gen);
     graph->printGraphCmd();
+    cout << "Número de Arestas: " << graph->getNumEdges() << endl;
     graph->printGraphTxt("../outputs/grafo.dot");
 }

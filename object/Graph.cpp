@@ -13,10 +13,10 @@ Graph::Graph(int order, mt19937* gen){
 
 
     //Instancia a matriz de adjacências
-    this->matrix = new int*[this->order];
+    this->matrix = new bool*[this->order];
 
     for(int i = 0; i < this->order; i++)
-        this->matrix[i] = new int[this->order];
+        this->matrix[i] = new bool[this->order];
 
 
     //Preenche o grafo com valores
@@ -37,15 +37,15 @@ int Graph::getOrder(){
 void Graph::fillGraph(){
 
     for(int i = 0; i < this->order; i++){
-        for(int j = 0; j < this->order; j++){
-            if(i < j){
-                this->matrix[i][j] = intRandom(0, 1, this->gen); 
-            }
-            else if(i > j){
-                this->matrix[i][j] = this->matrix[j][i]; //grafo não direcionado
-            }
-            else
-                this->matrix[i][j] = 0; //sem self-loop
+        for(int j = i+1; j < this->order; j++){
+            
+            this->matrix[i][j] = intRandom(0, 1, this->gen) == 1; 
+            
+            if(this->matrix[i][j] == 1) 
+                this->numEdges += 1;
+
+            this->matrix[j][i] = this->matrix[i][j]; //grafo não direcionado
+            this->matrix[i][i] = 0; //sem self-loop
         }
     }
 
@@ -81,4 +81,8 @@ void Graph::printGraphTxt(string pathname){
     }
     
     file.close();
+}
+
+int Graph::getNumEdges(){
+    return this->numEdges;
 }

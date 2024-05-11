@@ -9,7 +9,8 @@ class Graph{
 
     private:
         int order;
-        int** matrix;
+        int numEdges = 0;
+        bool** matrix;
         mt19937 *gen;
         void fillGraph();
 
@@ -19,6 +20,7 @@ class Graph{
         int getOrder();
         void printGraphCmd();
         void printGraphTxt(string pathname);
+        int getNumEdges();
 };
 
 #endif
