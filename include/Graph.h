@@ -2,6 +2,7 @@
 #define GRAPH_H_INCLUDE
 
 #include <random>
+#include <tuple>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ class Graph{
         int* indexVector;// representação da matriz de adjacência em um vetor de índices
         mt19937 *gen;
         void fillGraph();
+        int fRec(int i, int j, int aux);
         
     public:
         Graph(int order, mt19937 *gen);
@@ -32,7 +34,10 @@ class Graph{
         bool** indexVectorToMatrix();
         int* merge(int *v1,int s1, int *v2, int s2);
         int* match(int *v1,int s1, int *v2, int s2);
-
+        int mapMatrixToIndexVectorAnalytic(int i, int j);
+        int mapMatrixToIndexVectorRecursive(int i, int j);
+        int mapMatrixToIndexVectorIteration(int i, int j);
+        tuple<int, int> mapIndexVectorToMatrixIteration(int k);
 };
 
 #endif

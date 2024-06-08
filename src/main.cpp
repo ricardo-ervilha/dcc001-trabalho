@@ -4,19 +4,7 @@
 
 using namespace std;
 
-int main()
-{
-
-    // Seed
-    unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
-    cout << "Seed: " << seed << endl;
-    mt19937 gen(seed);
-
-    // Teste
-    int order = 4;
-    Graph *graph = new Graph(order, &gen);
-    graph->printGraphCmd();
-    cout << "Número de Arestas: " << graph->getNumEdges() << endl;
+void luquetas(Graph *graph){
     graph->matrixToBinaryVector();
     graph->printBinaryVector();
 
@@ -45,4 +33,37 @@ int main()
         cout << v4[i] << "\t";
     }
     cout << endl;
+}
+
+void ricardo(Graph *graph){
+    
+    int i = 2;
+    int j = 3;
+    cout << "Indice (i,j) mapeado analiticamente em: " <<  graph->mapMatrixToIndexVectorAnalytic(i,j) << endl;
+
+    cout << "Indice (i,j) mapeado recursivamente em: " <<  graph->mapMatrixToIndexVectorRecursive(i,j) << endl;
+    
+    cout << "Indice (i,j) mapeado iterativamente em: " <<  graph->mapMatrixToIndexVectorRecursive(i,j) << endl;
+}
+
+int main()
+{
+
+    // Seed
+    unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
+    cout << "Seed: " << seed << endl;
+    mt19937 gen(seed);
+
+    // Teste
+    int order = 4;
+    Graph *graph = new Graph(order, &gen);
+    graph->printGraphCmd();
+    cout << "Número de Arestas: " << graph->getNumEdges() << endl;
+    
+    graph->matrixToBinaryVector();
+    graph->printBinaryVector();
+
+    graph->binaryVectorToIndexVector();
+    graph->printIndexVector();
+
 }

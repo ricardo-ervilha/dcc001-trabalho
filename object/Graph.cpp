@@ -319,3 +319,51 @@ int *Graph::match(int *v1, int s1, int *v2, int s2)
 
     return v3;
 }
+
+/**
+ * Converte (i, j) em um índice único analiticamente
+ */
+int Graph::mapMatrixToIndexVectorAnalytic(int i, int j){
+    int f_i_n = (2 * this->getOrder() - i - 1) * (i) / 2;
+    return (j - i - 1) + f_i_n; //correct
+}
+
+
+int Graph::fRec(int i, int j, int aux){
+    if(aux == 0)
+        return (j - i - 1);
+    else
+        return (this->getOrder() - aux) + fRec(i, j, aux-1); 
+}
+
+
+/**
+ * Converte (i, j) em um índice único recursivamente
+ */
+int Graph::mapMatrixToIndexVectorRecursive(int i, int j){
+    return fRec(i, j, i);  
+}
+
+
+/**
+ * Converte (i, j) em um índice único iterativamente
+ */
+int Graph::mapMatrixToIndexVectorIteration(int i, int j){
+    
+    int cont = 0;
+    for(int aux = i; aux >= 0; aux--){
+        if(aux != 0)
+            cont += this->getOrder() - aux;
+        else
+            cont += j - i - 1;
+    }
+
+    return cont;
+}
+
+/**
+ * Converte k em (i, j) iterativamente
+ */
+tuple<int, int> Graph::mapIndexVectorToMatrixIteration(int k){
+    //pass;
+}
