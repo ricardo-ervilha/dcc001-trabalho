@@ -3,6 +3,7 @@
 
 #include <random>
 #include <tuple>
+#include <cmath>
 
 using namespace std;
 
@@ -18,7 +19,9 @@ class Graph{
         mt19937 *gen;
         void fillGraph();
         int fRec(int i, int j, int aux);
-        
+        int findIIterative(int k);
+        int findIAnalytic(int k);
+
     public:
         Graph(int order, mt19937 *gen);
         ~Graph();
@@ -38,6 +41,7 @@ class Graph{
         int mapMatrixToIndexVectorRecursive(int i, int j);
         int mapMatrixToIndexVectorIteration(int i, int j);
         tuple<int, int> mapIndexVectorToMatrixIteration(int k);
+        tuple<int, int> mapIndexVectorToMatrixAnalytic(int k);
 };
 
 #endif

@@ -66,4 +66,11 @@ int main()
     graph->binaryVectorToIndexVector();
     graph->printIndexVector();
 
+    int k;
+    cout << "Leia o valor de k: ";
+    cin >> k;
+    cout << endl;
+
+    tuple<int, int> aux = graph->mapIndexVectorToMatrixAnalytic(k);
+    cout << "iIterativo: " << get<0>(aux) << " iAnalitico: " << get<1>(aux) << endl;
 }

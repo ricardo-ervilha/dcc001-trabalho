@@ -361,9 +361,36 @@ int Graph::mapMatrixToIndexVectorIteration(int i, int j){
     return cont;
 }
 
+int Graph::findIIterative(int k){
+    //Rever e entender essas contas
+    int sn = this->getOrder() - 1;
+    int termo = sn - 1;
+
+    int i = 0;
+    while(k >= sn){
+        sn = sn + termo;
+        termo = termo - 1;
+        i = i + 1;
+    }
+
+    return i;
+}
+
+int Graph::findIAnalytic(int k){
+    int n = this->getOrder();
+    int valLeft = (2*n - 1);
+    int insideSquareRoot = pow(2*n - 1, 2) - 8*k; 
+
+    float sqrtVal = sqrt(insideSquareRoot);
+    
+    return (valLeft - sqrtVal) / 2;
+}
 /**
  * Converte k em (i, j) iterativamente
  */
-tuple<int, int> Graph::mapIndexVectorToMatrixIteration(int k){
-    //pass;
+tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k){
+    int i = findIIterative(k);
+    int j = findIAnalytic(k);
+
+    return make_tuple(i, j);
 }
