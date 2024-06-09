@@ -72,5 +72,5 @@ int main()
     cout << endl;
 
     tuple<int, int> aux = graph->mapIndexVectorToMatrixAnalytic(k);
-    cout << "iIterativo: " << get<0>(aux) << " iAnalitico: " << get<1>(aux) << endl;
+    cout << "i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
 }

@@ -20,7 +20,9 @@ class Graph{
         void fillGraph();
         int fRec(int i, int j, int aux);
         int findIIterative(int k);
+        int findJIterative(int i, int k);
         int findIAnalytic(int k);
+        int findJAnalytic(int i, int k);
 
     public:
         Graph(int order, mt19937 *gen);

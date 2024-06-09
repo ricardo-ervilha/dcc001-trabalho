@@ -385,12 +385,32 @@ int Graph::findIAnalytic(int k){
     
     return (valLeft - sqrtVal) / 2;
 }
+
+int Graph::findJAnalytic(int i, int k){
+    int n = this->getOrder();
+    
+    int partial = i * (2*n - i - 1) / 2 - i - 1;
+    return k - partial;
+}
+
+int Graph::findJIterative(int i, int k){
+    int cont = 0;
+    for(int aux = i; aux >= 0; aux--){
+        if(aux != 0)
+            cont -= this->getOrder() - aux;
+        else
+            cont += k + i + 1;
+    }
+
+    return cont;
+}
+
 /**
  * Converte k em (i, j) iterativamente
  */
 tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k){
     int i = findIIterative(k);
-    int j = findIAnalytic(k);
+    int j = findJIterative(i, k);
 
     return make_tuple(i, j);
 }
