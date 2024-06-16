@@ -381,9 +381,14 @@ int Graph::findIAnalytic(int k){
     int valLeft = (2*n - 1);
     int insideSquareRoot = pow(2*n - 1, 2) - 8*k; 
 
-    float sqrtVal = sqrt(insideSquareRoot);
+    int sqrtVal = pellSquareRoot(insideSquareRoot);
     
-    return (valLeft - sqrtVal) / 2;
+    int i = (valLeft - sqrtVal) / 2;
+
+    if(k < i * (2 * n - i - 1) / 2 )
+        i -= 1;
+
+    return i;
 }
 
 int Graph::findJAnalytic(int i, int k){
@@ -409,8 +414,8 @@ int Graph::findJIterative(int i, int k){
  * Converte k em (i, j) iterativamente
  */
 tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k){
-    int i = findIIterative(k);
-    int j = findJIterative(i, k);
+    int i = findIAnalytic(k);
+    int j = findJAnalytic(i, k);
 
     return make_tuple(i, j);
 }

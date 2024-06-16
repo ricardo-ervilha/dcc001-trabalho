@@ -55,7 +55,7 @@ int main()
     mt19937 gen(seed);
 
     // Teste
-    int order = 4;
+    int order = 5;
     Graph *graph = new Graph(order, &gen);
     graph->printGraphCmd();
     cout << "Número de Arestas: " << graph->getNumEdges() << endl;
@@ -67,9 +67,7 @@ int main()
     graph->printIndexVector();
 
     int k;
-    cout << "Leia o valor de k: ";
     cin >> k;
-    cout << endl;
 
     tuple<int, int> aux = graph->mapIndexVectorToMatrixAnalytic(k);
     cout << "i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
