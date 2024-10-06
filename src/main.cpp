@@ -21,7 +21,14 @@ int main()
     cout << "Complexidade: O(|E|)" << endl;
 
     cout << "\n# Número de Vértices: " << order << endl;
-    cout << "# Número de Arestas[" << order << " , " << 10 * order << "]: " << graph->getNumEdges() << endl;
+
+     int max_order = order * (order - 1 ) / 2;
+     if(10*order <= max_order){
+          cout << "# Número de Arestas[" << order << " , " << 10 * order << "]: " << graph->getNumEdges() << endl;
+     }else {
+          cout << "# Número de Arestas[" << order << " , " << max_order << "]: " << graph->getNumEdges() << endl;
+     }
+    
     cout << "\nMatriz de Adjacências: " << endl;
     graph->printGraphCmd();
 
