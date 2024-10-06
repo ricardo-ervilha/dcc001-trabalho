@@ -53,8 +53,8 @@ int main()
     // Questão 6: A partir do (i, j) da matriz acessar o índice k do vetor de índices.
     cout << "\n\n-------------- Questão 6 - Mapeamento (i,j) ==> k --------------"
          << endl;
-    int i = 3;
-    int j = 4;
+    int i = 2;
+    int j = 5;
 
     cout << "(ANALÍTICO) - Complexidade: O(1)   - Valor do índice k a partir do i: " << i << " e j: " << j << " => " << graph->mapMatrixToIndexVectorAnalytic(i, j) << endl;
 
