@@ -39,6 +39,8 @@ int intRandom(int min, int max, mt19937 *gen)
 int pellSquareRoot(int m){
     int n = 0;
     int i = 1;
+    
+    //subtraindo os impares
     while (m >= i){
         m = m - i;
         i = i + 2;

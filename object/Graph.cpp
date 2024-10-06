@@ -76,6 +76,18 @@ int Graph::getOrder()
     return this->order;
 }
 
+// Complexidade: O(1).
+bool **Graph::getMatrix()
+{
+    return this->matrix;
+}
+
+// Complexidade: O(1).
+int Graph::getNumEdges()
+{
+    return this->numEdges;
+}
+
 // Questões 1 & 2: Complexidade => O(|E|).
 void Graph::fillGraph()
 {
@@ -86,6 +98,7 @@ void Graph::fillGraph()
         int i = intRandom(0, this->order - 1, this->gen); // sorteia o i
         int j = intRandom(0, this->order - 1, this->gen); // sorteia o j
 
+        // não pegar posição na diagonal e não pegar posição já gerada
         if (i != j && this->matrix[i][j] != 1)
         {
             this->matrix[i][j] = 1;
@@ -172,12 +185,6 @@ void Graph::printMatrixConvertedCmd()
     }
 }
 
-// Complexidade: O(1).
-int Graph::getNumEdges()
-{
-    return this->numEdges;
-}
-
 /**
  * Converte a representação do grafo em matriz de adjacência para vetor binário
  *
@@ -230,7 +237,9 @@ int *Graph::binaryVectorToIndexVector()
  */
 bool **Graph::indexVectorToMatrix()
 {
-    cout << "# Conversão vetor de índices para binário... " << endl;
+    cout << "# Conversão vetor de índices para binário: " << endl;
+    cout << "Complexidade => O(|E|)\n"
+         << endl;
     int size = (this->order * (this->order - 1)) / 2;
     bool *tempBinaryVector = new bool[size];
 
@@ -247,7 +256,9 @@ bool **Graph::indexVectorToMatrix()
     }
     cout << endl;
 
-    cout << "# Convertendo vetor de binário para matriz... " << endl;
+    cout << "\nConvertendo vetor binário para matriz: " << endl;
+    cout << "Complexidade => O(|V|²)\n"
+         << endl;
     k = 0;
     for (int i = 0; i < this->order; i++)
     {
@@ -259,100 +270,6 @@ bool **Graph::indexVectorToMatrix()
         }
     }
     return this->matrixConverted;
-}
-
-/**
- * Realiza a operação de merge entre dois vetores de índices
- * O vetor retornado irá conter os índices que existem em `v1` ou `v2`
- *
- * @param v1 vetor de índices 1
- * @param s1 tamanho do vetor de índices 1
- * @param v2 vetor de índices 2
- * @param s2 tamanho do vetor de índices 2
- * @param size tamanho do vetor retornado
- * @return um vetor com os índices que existem em `v1` ou em `v2`
- *
- * Questão 8: Complexidade => O(|E|).
- */
-int *Graph::merge(int *v1, int s1, int *v2, int s2, int *size)
-{
-    int *v3 = new int[s1 + s2];
-    int k1 = 0, k2 = 0;
-    int min = s1 < s2 ? s1 : s2;
-
-    int i;
-    for (i = 0; k1 < s1 && k2 < s2; i++)
-    {
-        if (v1[k1] == v2[k2])
-        {
-            v3[i] = v1[k1];
-            k1++;
-            k2++;
-        }
-        else if (v1[k1] < v2[k2])
-        {
-            v3[i] = v1[k1++];
-        }
-        else
-        {
-            v3[i] = v2[k2++];
-        }
-    }
-
-    // copiar o restante de v1
-    for (; k1 < s1; k1++)
-    {
-        v3[i++] = v1[k1];
-    }
-
-    // copiar o restante de v2
-    for (; k2 < s2; k2++)
-    {
-        v3[i++] = v2[k2];
-    }
-
-    *size = i;
-    
-    return v3;
-}
-
-/**
- * Realiza a operação de match entre dois vetores de índices
- * O vetor retornado irá conter apenas os índices quue existem em `v1`e `v2`
- *
- * @param v1 vetor de índices 1
- * @param s1 tamanho do vetor de índices 1
- * @param v2 vetor de índices 2
- * @param s2 tamanho do vetor de índices 2
- * @return um vetor com apenas os índices que existem em `v1` e `v2`
- *
- * Questão 8: Complexidade => O(|E|).
- */
-int *Graph::match(int *v1, int s1, int *v2, int s2, int *size)
-{
-    int k1 = 0, k2 = 0, k3 = 0;
-    int min = s1 < s2 ? s1 : s2;
-    int *v3 = new int[min];
-    for (int i = 0; k1 < s1 && k2 < s2; i++)
-    {
-        if (v1[k1] == v2[k2])
-        {
-            v3[k3++] = v1[k1++];
-            k2++;
-        }
-        else if (v1[k1] < v2[k2])
-        {
-            k1++;
-        }
-        else
-        {
-            k2++;
-        }
-    }
-
-    *size = k3;
-
-    return v3;
 }
 
 /**
@@ -407,7 +324,6 @@ int Graph::mapMatrixToIndexVectorIteration(int i, int j)
 // Questão 7: Complexidade => O(|V|)
 int Graph::findIIterative(int k)
 {
-    // Rever e entender essas contas
     int sn = this->getOrder() - 1;
     int termo = sn - 1;
 
@@ -429,7 +345,7 @@ int Graph::findIAnalytic(int k)
     int valLeft = (2 * n - 1);
     int insideSquareRoot = pow(2 * n - 1, 2) - 8 * k;
 
-    int sqrtVal = pellSquareRoot(insideSquareRoot); // Assumindo O(1)...
+    int sqrtVal = pellSquareRoot(insideSquareRoot);
 
     int i = (valLeft - sqrtVal) / 2;
 
@@ -483,4 +399,194 @@ tuple<int, int> Graph::mapIndexVectorToMatrixIteration(int k)
     int j = findJIterative(i, k);
 
     return make_tuple(i, j);
+}
+
+int *Graph::mergeQuadratico(bool **A, bool **B, int *sizeMerge2)
+{
+    bool **C = new bool *[this->order];
+    // inicializar a matrix
+    for (int i = 0; i < this->order; i++)
+    {
+        C[i] = new bool[this->order];
+    }
+
+    int size = (this->order * (this->order - 1)) / 2;
+    bool *binaryVectorMatrixC = new bool[size];
+
+    // fazer a operação merge (Soma) da matrix A com B e guardar em C
+    int k = 0;
+    int countEdges = 0;
+
+    for (int i = 0; i < this->getOrder(); i++)
+    {
+        C[i][i] = 0;
+        for (int j = i + 1; j < this->getOrder(); j++)
+        {
+            C[i][j] = A[i][j] + B[i][j];
+            C[j][i] = A[i][j] + B[i][j];
+            binaryVectorMatrixC[k] = C[i][j];
+
+            if (binaryVectorMatrixC[k] == 1)
+            {
+                countEdges++;
+            }
+            k++;
+        }
+    }
+
+    int *indexVectorMatrixC = new int[countEdges];
+    k = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (binaryVectorMatrixC[i] == 1)
+        {
+            indexVectorMatrixC[k++] = i;
+        }
+    }
+
+    *sizeMerge2 = k;
+
+    return indexVectorMatrixC;
+}
+
+int *Graph::matchQuadratico(bool **A, bool **B, int *sizeMatch2)
+{
+    bool **C = new bool *[this->order];
+    // inicializar a matrix
+    for (int i = 0; i < this->order; i++)
+    {
+        C[i] = new bool[this->order];
+    }
+
+    int size = (this->order * (this->order - 1)) / 2;
+    bool *binaryVectorMatrixC = new bool[size];
+
+    // fazer a operação match (Produto) da matrix A com B e guardar em C
+    int k = 0;
+    int countEdges = 0;
+
+    for (int i = 0; i < this->getOrder(); i++)
+    {
+        C[i][i] = 0;
+        for (int j = i + 1; j < this->getOrder(); j++)
+        {
+            C[i][j] = A[i][j] * B[i][j];
+            C[j][i] = A[i][j] * B[i][j];
+
+            binaryVectorMatrixC[k] = C[i][j];
+            if (binaryVectorMatrixC[k] == 1)
+            {
+                countEdges++;
+            }
+            k++;
+        }
+    }
+
+    int *indexVectorMatrixC = new int[countEdges];
+    k = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (binaryVectorMatrixC[i] == 1)
+        {
+            indexVectorMatrixC[k++] = i;
+        }
+    }
+
+    *sizeMatch2 = k;
+
+    return indexVectorMatrixC;
+}
+
+/**
+ * Realiza a operação de merge entre dois vetores de índices
+ * O vetor retornado irá conter os índices que existem em `v1` ou `v2`
+ *
+ * @param v1 vetor de índices 1
+ * @param s1 tamanho do vetor de índices 1
+ * @param v2 vetor de índices 2
+ * @param s2 tamanho do vetor de índices 2
+ * @param size tamanho do vetor retornado
+ * @return um vetor com os índices que existem em `v1` ou em `v2`
+ *
+ * Questão 8: Complexidade => O(|E|).
+ */
+int *Graph::merge(int *v1, int s1, int *v2, int s2, int *size)
+{
+    int *v3 = new int[s1 + s2];
+    int k1 = 0, k2 = 0;
+    int min = s1 < s2 ? s1 : s2;
+
+    int i;
+    for (i = 0; k1 < s1 && k2 < s2; i++)
+    {
+        if (v1[k1] == v2[k2])
+        {
+            v3[i] = v1[k1];
+            k1++;
+            k2++;
+        }
+        else if (v1[k1] < v2[k2])
+        {
+            v3[i] = v1[k1++];
+        }
+        else
+        {
+            v3[i] = v2[k2++];
+        }
+    }
+
+    // copiar o restante de v1
+    for (; k1 < s1; k1++)
+    {
+        v3[i++] = v1[k1];
+    }
+
+    // copiar o restante de v2
+    for (; k2 < s2; k2++)
+    {
+        v3[i++] = v2[k2];
+    }
+
+    *size = i;
+
+    return v3;
+}
+
+/**
+ * Realiza a operação de match entre dois vetores de índices
+ * O vetor retornado irá conter apenas os índices quue existem em `v1`e `v2`
+ *
+ * @param v1 vetor de índices 1
+ * @param s1 tamanho do vetor de índices 1
+ * @param v2 vetor de índices 2
+ * @param s2 tamanho do vetor de índices 2
+ * @return um vetor com apenas os índices que existem em `v1` e `v2`
+ *
+ * Questão 8: Complexidade => O(|E|).
+ */
+int *Graph::match(int *v1, int s1, int *v2, int s2, int *size)
+{
+    int k1 = 0, k2 = 0, k3 = 0;
+    int min = s1 < s2 ? s1 : s2;
+    int *v3 = new int[min];
+    for (int i = 0; k1 < s1 && k2 < s2; i++)
+    {
+        if (v1[k1] == v2[k2])
+        {
+            v3[k3++] = v1[k1++];
+            k2++;
+        }
+        else if (v1[k1] < v2[k2])
+        {
+            k1++;
+        }
+        else
+        {
+            k2++;
+        }
+    }
+
+    *size = k3;
+
+    return v3;
 }
