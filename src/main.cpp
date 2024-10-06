@@ -57,29 +57,44 @@ int main()
 
     //----------------------------------------------------------------------------------------
 
-    mt19937 gen2(2*seed);
+    mt19937 gen2(2 * seed);
     Graph *graph2 = new Graph(order, &gen2);
     graph2->matrixToBinaryVector();
     int *v2 = graph2->binaryVectorToIndexVector();
     graph2->printIndexVector();
     cout << endl;
 
-
     // Questão 8: Match e Merge dos vetores de índice.
-    int *v3 = graph->merge(v1, graph->getNumEdges(), v2, graph2->getNumEdges());
-    int *v4 = graph->match(v2, graph->getNumEdges(), v2, graph2->getNumEdges());
+    int sizeMerge, sizeMatch;
+    int *v3 = graph->merge(v1, graph->getNumEdges(), v2, graph2->getNumEdges(), &sizeMerge);
+    int *v4 = graph->match(v1, graph->getNumEdges(), v2, graph2->getNumEdges(), &sizeMatch);
+
+    cout << "V1: ";
+    for (int i = 0; i < graph->getNumEdges(); i++)
+    {
+        cout << v1[i] << " ";
+    }
+
+    cout << endl;
+    cout << "V2: ";
+    for (int i = 0; i < graph2->getNumEdges(); i++)
+    {
+        cout << v2[i] << " ";
+    }
+
+    cout << endl;
 
     cout << "# Merge: " << endl;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < sizeMerge; i++)
     {
-        cout << v3[i] << "\t";
+        cout << v3[i] << " ";
     }
     cout << endl;
-    
+
     cout << "# Match: " << endl;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < sizeMatch; i++)
     {
-        cout << v4[i] << "\t";
+        cout << v4[i] << " ";
     }
     cout << endl;
 }

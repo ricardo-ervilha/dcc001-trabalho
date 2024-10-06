@@ -12,9 +12,9 @@ Graph::Graph(int order, mt19937 *gen)
     this->gen = gen;
 
     // Número de Arestas do Grafo
-    int numEdges = intRandom(this->order, 10 * this->order, this->gen); //Sorteia o número de arestas sendo que |V| <= |E| <= 10 * |V|.
+    int numEdges = intRandom(this->order, 10 * this->order, this->gen); // Sorteia o número de arestas sendo que |V| <= |E| <= 10 * |V|.
 
-    if ( numEdges > this->order * (this->order-1) / 2 )
+    if (numEdges > this->order * (this->order - 1) / 2)
         this->numEdges = this->order; // Caso de 10*|V| ser maior que |V| * (|V| - 1) / 2.
     else
         this->numEdges = numEdges;
@@ -34,7 +34,7 @@ Graph::Graph(int order, mt19937 *gen)
     // Inicializa a matriz
     for (int i = 0; i < this->order; i++)
     {
-        this->matrix[i][i] = 0; 
+        this->matrix[i][i] = 0;
 
         for (int j = i + 1; j < this->order; j++)
         {
@@ -43,7 +43,7 @@ Graph::Graph(int order, mt19937 *gen)
         }
     }
 
-    //Preenche a matriz com as arestas
+    // Preenche a matriz com as arestas
     this->fillGraph();
 
     //----------------------------------------------------------------------------------------
@@ -81,17 +81,18 @@ void Graph::fillGraph()
 {
     int countEdges = 0;
 
-    while(countEdges < this->numEdges){
-        int i = intRandom(0, this->order - 1, this->gen); //sorteia o i
-        int j = intRandom(0, this->order - 1, this->gen); //sorteia o j
+    while (countEdges < this->numEdges)
+    {
+        int i = intRandom(0, this->order - 1, this->gen); // sorteia o i
+        int j = intRandom(0, this->order - 1, this->gen); // sorteia o j
 
-        if(i != j && this->matrix[i][j] != 1){
+        if (i != j && this->matrix[i][j] != 1)
+        {
             this->matrix[i][j] = 1;
             this->matrix[j][i] = 1;
-            countEdges++; 
+            countEdges++;
         }
     }
-
 }
 
 // Função para impressão do Grafo a partir da matriz de adjacências.
@@ -179,11 +180,11 @@ int Graph::getNumEdges()
 
 /**
  * Converte a representação do grafo em matriz de adjacência para vetor binário
- * 
+ *
  * @return vetor binário
- * 
+ *
  * Questão 3: Complexidade => O(|V|²)
-*/
+ */
 bool *Graph::matrixToBinaryVector()
 {
     int k = 0;
@@ -201,11 +202,11 @@ bool *Graph::matrixToBinaryVector()
 /**
  * Converte o vetor binário para vetor de índices
  * cada posição guarda o índice do valor `1` do vetor binário
- * 
+ *
  * Questão 4: Complexidade => O(|V|²)
- * 
-*/
-int* Graph::binaryVectorToIndexVector()
+ *
+ */
+int *Graph::binaryVectorToIndexVector()
 {
     int size = (this->order * (this->order - 1)) / 2;
     int k = 0;
@@ -222,11 +223,11 @@ int* Graph::binaryVectorToIndexVector()
 
 /**
  * Converte o vetor de índices para matriz de adjacência
- * 
+ *
  * @return a matriz de adjacênciia a partir do vetor de índices
- * 
+ *
  * Questão 5: Complexidade => O(|V|²)
-*/
+ */
 bool **Graph::indexVectorToMatrix()
 {
     cout << "# Conversão vetor de índices para binário... " << endl;
@@ -260,20 +261,20 @@ bool **Graph::indexVectorToMatrix()
     return this->matrixConverted;
 }
 
-
 /**
  * Realiza a operação de merge entre dois vetores de índices
- * O vetor retornado irá coonter os índices que existem em `v1` ou `v2`
- * 
+ * O vetor retornado irá conter os índices que existem em `v1` ou `v2`
+ *
  * @param v1 vetor de índices 1
  * @param s1 tamanho do vetor de índices 1
  * @param v2 vetor de índices 2
  * @param s2 tamanho do vetor de índices 2
+ * @param size tamanho do vetor retornado
  * @return um vetor com os índices que existem em `v1` ou em `v2`
- * 
+ *
  * Questão 8: Complexidade => O(|E|).
-*/
-int *Graph::merge(int *v1, int s1, int *v2, int s2)
+ */
+int *Graph::merge(int *v1, int s1, int *v2, int s2, int *size)
 {
     int *v3 = new int[s1 + s2];
     int k1 = 0, k2 = 0;
@@ -310,32 +311,30 @@ int *Graph::merge(int *v1, int s1, int *v2, int s2)
         v3[i++] = v2[k2];
     }
 
+    *size = i;
+    
     return v3;
 }
 
 /**
  * Realiza a operação de match entre dois vetores de índices
  * O vetor retornado irá conter apenas os índices quue existem em `v1`e `v2`
- * 
+ *
  * @param v1 vetor de índices 1
  * @param s1 tamanho do vetor de índices 1
  * @param v2 vetor de índices 2
  * @param s2 tamanho do vetor de índices 2
  * @return um vetor com apenas os índices que existem em `v1` e `v2`
- * 
+ *
  * Questão 8: Complexidade => O(|E|).
-*/
-int *Graph::match(int *v1, int s1, int *v2, int s2)
+ */
+int *Graph::match(int *v1, int s1, int *v2, int s2, int *size)
 {
     int k1 = 0, k2 = 0, k3 = 0;
     int min = s1 < s2 ? s1 : s2;
     int *v3 = new int[min];
     for (int i = 0; k1 < s1 && k2 < s2; i++)
     {
-        cout << "i: " << i;
-        cout << "\tk1: " << k1;
-        cout << "\tk2: " << k2 << endl;
-
         if (v1[k1] == v2[k2])
         {
             v3[k3++] = v1[k1++];
@@ -351,47 +350,52 @@ int *Graph::match(int *v1, int s1, int *v2, int s2)
         }
     }
 
+    *size = k3;
+
     return v3;
 }
 
 /**
  * Converte (i, j) em um índice único analiticamente
- * 
+ *
  * Questão 6: Complexidade => O(1)
  */
-int Graph::mapMatrixToIndexVectorAnalytic(int i, int j){
+int Graph::mapMatrixToIndexVectorAnalytic(int i, int j)
+{
     int f_i_n = (2 * this->getOrder() - i - 1) * (i) / 2;
     return (j - i - 1) + f_i_n;
 }
 
-
-int Graph::fRec(int i, int j, int aux){
-    if(aux == 0)
+int Graph::fRec(int i, int j, int aux)
+{
+    if (aux == 0)
         return (j - i - 1);
     else
-        return (this->getOrder() - aux) + fRec(i, j, aux-1); 
+        return (this->getOrder() - aux) + fRec(i, j, aux - 1);
 }
-
 
 /**
  * Converte (i, j) em um índice único recursivamente
- * 
+ *
  * Questão 6: Complexidade => O(|V|).
  */
-int Graph::mapMatrixToIndexVectorRecursive(int i, int j){
-    return fRec(i, j, i);  
+int Graph::mapMatrixToIndexVectorRecursive(int i, int j)
+{
+    return fRec(i, j, i);
 }
 
 /**
  * Converte (i, j) em um índice único iterativamente
- * 
+ *
  * Questão 6: Complexidade => O(|V|).
  */
-int Graph::mapMatrixToIndexVectorIteration(int i, int j){
-    
+int Graph::mapMatrixToIndexVectorIteration(int i, int j)
+{
+
     int cont = 0;
-    for(int aux = i; aux >= 0; aux--){
-        if(aux != 0)
+    for (int aux = i; aux >= 0; aux--)
+    {
+        if (aux != 0)
             cont += this->getOrder() - aux;
         else
             cont += j - i - 1;
@@ -401,13 +405,15 @@ int Graph::mapMatrixToIndexVectorIteration(int i, int j){
 }
 
 // Questão 7: Complexidade => O(|V|)
-int Graph::findIIterative(int k){
-    //Rever e entender essas contas
+int Graph::findIIterative(int k)
+{
+    // Rever e entender essas contas
     int sn = this->getOrder() - 1;
     int termo = sn - 1;
 
     int i = 0;
-    while(k >= sn){
+    while (k >= sn)
+    {
         sn = sn + termo;
         termo = termo - 1;
         i = i + 1;
@@ -417,34 +423,38 @@ int Graph::findIIterative(int k){
 }
 
 // Questão 7: Complexidade => O(|V|)
-int Graph::findIAnalytic(int k){
+int Graph::findIAnalytic(int k)
+{
     int n = this->getOrder();
-    int valLeft = (2*n - 1);
-    int insideSquareRoot = pow(2*n - 1, 2) - 8*k; 
+    int valLeft = (2 * n - 1);
+    int insideSquareRoot = pow(2 * n - 1, 2) - 8 * k;
 
     int sqrtVal = pellSquareRoot(insideSquareRoot); // Assumindo O(1)...
-    
+
     int i = (valLeft - sqrtVal) / 2;
 
-    if(k < i * (2 * n - i - 1) / 2 )
+    if (k < i * (2 * n - i - 1) / 2)
         i -= 1;
 
     return i;
 }
 
 // Questão 7: Complexidade => O(1)
-int Graph::findJAnalytic(int i, int k){
+int Graph::findJAnalytic(int i, int k)
+{
     int n = this->getOrder();
-    
-    int partial = i * (2*n - i - 1) / 2 - i - 1;
+
+    int partial = i * (2 * n - i - 1) / 2 - i - 1;
     return k - partial;
 }
 
 // Questão 7: Complexidade => O(|V|)
-int Graph::findJIterative(int i, int k){
+int Graph::findJIterative(int i, int k)
+{
     int cont = 0;
-    for(int aux = i; aux >= 0; aux--){
-        if(aux != 0)
+    for (int aux = i; aux >= 0; aux--)
+    {
+        if (aux != 0)
             cont -= this->getOrder() - aux;
         else
             cont += k + i + 1;
@@ -456,7 +466,8 @@ int Graph::findJIterative(int i, int k){
 /**
  * Converte k em (i, j) analiticamente
  */
-tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k){
+tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k)
+{
     int i = findIAnalytic(k);
     int j = findJAnalytic(i, k);
 
@@ -466,7 +477,8 @@ tuple<int, int> Graph::mapIndexVectorToMatrixAnalytic(int k){
 /**
  * Converte k em (i, j) iterativamente
  */
-tuple<int, int> Graph::mapIndexVectorToMatrixIteration(int k){
+tuple<int, int> Graph::mapIndexVectorToMatrixIteration(int k)
+{
     int i = findIIterative(k);
     int j = findJIterative(i, k);
 

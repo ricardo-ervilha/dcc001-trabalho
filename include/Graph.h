@@ -37,8 +37,8 @@ class Graph{
         bool* matrixToBinaryVector();
         int* binaryVectorToIndexVector();
         bool** indexVectorToMatrix();
-        int* merge(int *v1,int s1, int *v2, int s2);
-        int* match(int *v1,int s1, int *v2, int s2);
+        int* merge(int *v1,int s1, int *v2, int s2, int *size);
+        int* match(int *v1,int s1, int *v2, int s2, int *size);
         int mapMatrixToIndexVectorAnalytic(int i, int j);
         int mapMatrixToIndexVectorRecursive(int i, int j);
         int mapMatrixToIndexVectorIteration(int i, int j);
