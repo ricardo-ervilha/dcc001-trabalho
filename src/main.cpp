@@ -87,10 +87,10 @@ int main()
      int k = 15;
 
      tuple<int, int> aux = graph->mapIndexVectorToMatrixAnalytic(k);
-     cout << "Mapeamento ANALÍTICO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => Valor de i e j a partir de k = " << k <<  " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
+     cout << "Mapeamento ANALÍTICO  - Complexidade => " << bg_purple << "O(|V|^{1/2})" << bg_def << " => Valor de i e j a partir de k = " << k <<  " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
 
      aux = graph->mapIndexVectorToMatrixIteration(k);
-     cout << "Mapeamento ITERATIVO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => Valor de i e j a partir de k = " << k << " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
+     cout << "Mapeamento ITERATIVO  - Complexidade => " << bg_purple << "O(|V|^{1/2})" << bg_def << " => Valor de i e j a partir de k = " << k << " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
      cout << endl;
 
      //----------------------------------------------------------------------------------------
