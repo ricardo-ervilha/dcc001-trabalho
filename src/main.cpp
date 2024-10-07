@@ -20,7 +20,10 @@ int main()
      mt19937 gen(seed);
 
      // Geração do Grafo com ordem especificada.
-     int order = 8;
+     int order;
+     cout << "Informe o número de vértices do grafo: ";
+     cin >> order;
+     cout << endl;
      Graph *graph = new Graph(order, &gen);
 
      cout << "\n-------------- Questões 1 e 2 - Geração do Grafo --------------"
@@ -81,13 +84,13 @@ int main()
      // Questão 7: A partir do k do vetor de índices encontrar o (i, j) da matriz.
      cout << "\n\n-------------- Questão 7 - Mapeamento (i,j) ==> k --------------"
           << endl;
-     int k = 9;
+     int k = 15;
 
      tuple<int, int> aux = graph->mapIndexVectorToMatrixAnalytic(k);
-     cout << "Mapeamento ANALÍTICO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
+     cout << "Mapeamento ANALÍTICO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => Valor de i e j a partir de k = " << k <<  " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
 
      aux = graph->mapIndexVectorToMatrixIteration(k);
-     cout << "Mapeamento ITERATIVO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
+     cout << "Mapeamento ITERATIVO  - Complexidade => " << bg_purple << "O(|V|)" << bg_def << " => Valor de i e j a partir de k = " << k << " => i: " << get<0>(aux) << " j: " << get<1>(aux) << endl;
      cout << endl;
 
      //----------------------------------------------------------------------------------------

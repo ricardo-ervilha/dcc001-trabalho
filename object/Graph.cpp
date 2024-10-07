@@ -112,11 +112,16 @@ void Graph::fillGraph()
 // Função para impressão do Grafo a partir da matriz de adjacências.
 void Graph::printGraphCmd()
 {
+    Color::Modifier fg_cyan(Color::FG_CYAN);
+    Color::Modifier fg_def(Color::FG_DEFAULT);
     for (int i = 0; i < this->order; i++)
     {
         for (int j = 0; j < this->order; j++)
         {
-            cout << this->matrix[i][j] << "\t";
+            if(i >= j)
+                cout << this->matrix[i][j] << "\t";
+            else
+                cout << fg_cyan << this->matrix[i][j] << fg_def << "\t";
         }
         cout << endl;
     }
@@ -176,11 +181,17 @@ void Graph::printIndexVector()
 // Função para imprimir a matriz auxiliar.
 void Graph::printMatrixConvertedCmd()
 {
+    Color::Modifier fg_cyan(Color::FG_CYAN);
+    Color::Modifier fg_def(Color::FG_DEFAULT);
+
     for (int i = 0; i < this->order; i++)
     {
         for (int j = 0; j < this->order; j++)
         {
-            cout << this->matrixConverted[i][j] << "\t";
+            if(i >= j)
+                cout << this->matrixConverted[i][j] << "\t";
+            else
+                cout << fg_cyan << this->matrixConverted[i][j] << fg_def << "\t";
         }
         cout << endl;
     }
