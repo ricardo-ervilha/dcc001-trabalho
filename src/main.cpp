@@ -7,6 +7,11 @@ using namespace std;
 
 int main()
 {
+     cout << "Trabalho De Análise e Projeto de Algoritmos" << endl;
+     cout << "Integrante 1: Lucas Silva Santana   | Matrícula: 202165092C" << endl;
+     cout << "Integrante 2: Ricardo Ervilha Silva | Matrícula: 202165561C" << endl;
+     cout << endl;
+
      Color::Modifier bg_purple(Color::BG_PURPLE);
      Color::Modifier bg_def(Color::BG_DEFAULT);
      Color::Modifier fg_blue(Color::FG_BLUE);
