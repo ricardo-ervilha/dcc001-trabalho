@@ -243,15 +243,14 @@ bool **Graph::indexVectorToMatrix()
     int size = (this->order * (this->order - 1)) / 2;
     bool *tempBinaryVector = new bool[size];
 
-    int k = 0;
+    for (int i = 0; i < this->getNumEdges(); i++)
+    {
+        tempBinaryVector[this->indexVector[i]] = 1;
+    }
+    cout << endl;
+
     for (int i = 0; i < size; i++)
     {
-        tempBinaryVector[i] = 0;
-        if (i == this->indexVector[k])
-        {
-            tempBinaryVector[i] = 1;
-            k++;
-        }
         cout << tempBinaryVector[i] << " ";
     }
     cout << endl;
@@ -259,7 +258,8 @@ bool **Graph::indexVectorToMatrix()
     cout << "\nConvertendo vetor binário para matriz: " << endl;
     cout << "Complexidade => O(|V|²)\n"
          << endl;
-    k = 0;
+    
+    int k = 0;
     for (int i = 0; i < this->order; i++)
     {
         for (int j = i + 1; j < this->order; j++)
