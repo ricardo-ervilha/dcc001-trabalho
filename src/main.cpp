@@ -128,14 +128,14 @@ int main()
      }
      cout << endl;
 
-     cout << "\n\nMerge " << bg_purple << "O(n²)" << bg_def << ": \n\t";
+     cout << "\n\nMerge " << bg_purple << "O(|V|²)" << bg_def << ": \n\t";
      for (int i = 0; i < sizeMerge2; i++)
      {
           cout << v32[i] << " ";
      }
      cout << endl;
 
-     cout << "Merge " << bg_purple << "O(n)" << bg_def <<  ":\n\t";
+     cout << "Merge " << bg_purple << "O(|E|)" << bg_def <<  ":\n\t";
      for (int i = 0; i < sizeMerge; i++)
      {
           cout << v3[i] << " ";
@@ -144,14 +144,14 @@ int main()
 
      cout << "\n\n";
 
-     cout << "Match: " << bg_purple <<  "O(n²)" << bg_def << ": \n\t";
+     cout << "Match: " << bg_purple <<  "O(|V|²)" << bg_def << ": \n\t";
      for (int i = 0; i < sizeMatch2; i++)
      {
           cout << v42[i] << " ";
      }
      cout << endl;
 
-     cout << "Match: " << bg_purple <<  "O(n)"  << bg_def << ": \n\t";
+     cout << "Match: " << bg_purple <<  "O(|E|)"  << bg_def << ": \n\t";
      for (int i = 0; i < sizeMatch; i++)
      {
           cout << v4[i] << " ";
