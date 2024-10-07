@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../include/Graph.h"
 #include "../include/Utils.h"
+#include "../include/Color.h"
 
 using namespace std;
 
@@ -237,9 +238,11 @@ int *Graph::binaryVectorToIndexVector()
  */
 bool **Graph::indexVectorToMatrix()
 {
+    Color::Modifier bg_purple(Color::BG_PURPLE);
+    Color::Modifier bg_def(Color::BG_DEFAULT);
+
     cout << "# Conversão vetor de índices para binário: " << endl;
-    cout << "Complexidade => O(|E|)\n"
-         << endl;
+    cout << "Complexidade => " << bg_purple << "O(|E|)" << bg_def << endl;
     int size = (this->order * (this->order - 1)) / 2;
     bool *tempBinaryVector = new bool[size];
 
@@ -256,8 +259,7 @@ bool **Graph::indexVectorToMatrix()
     cout << endl;
 
     cout << "\nConvertendo vetor binário para matriz: " << endl;
-    cout << "Complexidade => O(|V|²)\n"
-         << endl;
+    cout << "Complexidade => " << bg_purple << "O(|V|²)" << bg_def << endl;
     
     int k = 0;
     for (int i = 0; i < this->order; i++)

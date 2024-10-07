@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 target_sources(main PRIVATE
     include/Graph.h
     include/Utils.h
+    include/Color.h
 )
 
 # Caminho completo para o arquivo grafo.dot
